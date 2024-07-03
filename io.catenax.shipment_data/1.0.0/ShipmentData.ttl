@@ -1,0 +1,278 @@
+@prefix samm: <urn:samm:org.eclipse.esmf.samm:meta-model:2.1.0#>.
+@prefix samm-c: <urn:samm:org.eclipse.esmf.samm:characteristic:2.1.0#>.
+@prefix samm-e: <urn:samm:org.eclipse.esmf.samm:entity:2.1.0#>.
+@prefix unit: <urn:samm:org.eclipse.esmf.samm:unit:2.1.0#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix : <urn:samm:io.catenax.shipment_data:1.0.0#>.
+
+:ShipmentData a samm:Aspect ;
+   samm:preferredName "Shipment Data"@en ;
+   samm:description "Data related to shipments withing the catena-X network, data exchange between participants related to their shipments for resources, supplies, raw materials or manufactured parts.\nThis entails estimate dates, parameters, properties, source and destination. "@en ;
+   samm:properties (:actualTechnicalTimestamp :actualBusinessTimestamp :statusUpdate :departureInfo :registrationInfo :arrivalInfo :shipmentNumber :serviceAgentId :transportInfo :estimatedTimestamps :trackedObjects);
+   samm:operations ();
+   samm:events ().
+
+:actualTechnicalTimestamp a samm:Property ;
+   samm:preferredName "actual technical timestamp"@en ;
+   samm:description "timestamp of when exactly the the payload is executed by a business operation"@en ;
+   samm:characteristic :Timestamp ;
+   samm:exampleValue "2024-07-03T02:00:00Z"^^xsd:dateTime.
+
+:actualBusinessTimestamp a samm:Property ;
+   samm:description "timestamp of when exactly the message payload is being sent"@en ;
+   samm:characteristic :Timestamp ;
+   samm:exampleValue "2024-07-03T01:00:00Z"^^xsd:dateTime.
+
+:statusUpdate a samm:Property ;
+   samm:preferredName "status update"@en ;
+   samm:description "event message that is sent in case of changes for any ongoing shipment. \n\nThis includes events such as location updates, departure, arrival, POD, cancellation and delays. \n\nA message with the respective event reason will be sent and update the shipments status."@en ;
+   samm:characteristic :StatusUpdateReason.
+
+:departureInfo a samm:Property ;
+   samm:preferredName "daparture info"@en ;
+   samm:description "All information about the location of departure, multiple entries make up this field to give insight on where the shipment originated from"@en ;
+   samm:characteristic :DepartureInfo.
+
+:registrationInfo a samm:Property ;
+   samm:preferredName "registration info"@en ;
+   samm:description "identification numbers that combined, uniquely identify a carrier's vehicle"@en ;
+   samm:characteristic :RegistrationInfo.
+
+:arrivalInfo a samm:Property ;
+   samm:characteristic :ArrivalInfo.
+
+:shipmentNumber a samm:Property ;
+   samm:preferredName "shipment number"@en ;
+   samm:description "Shipment identifier assigned during the order phase for a specific shipment.\nwith this number a shipment will be identified and trackable."@en ;
+   samm:characteristic :ShipmentNumber ;
+   samm:exampleValue "SHP25012024".
+
+:serviceAgentId a samm:Property ;
+   samm:preferredName "service agent id"@en ;
+   samm:description "containing info on the service agents for the shipment"@en ;
+   samm:characteristic :ServiceAgentInfo.
+
+:transportInfo a samm:Property ;
+   samm:preferredName "transport info"@en ;
+   samm:description "includes all information and attributes regarding the transport peripherals"@en ;
+   samm:characteristic :TransportInfo.
+
+:estimatedTimestamps a samm:Property ;
+   samm:preferredName "estimated timestamps"@en ;
+   samm:characteristic :EstimatedTimestamps.
+
+:trackedObjects a samm:Property ;
+   samm:preferredName "tracked objects"@en ;
+   samm:description "contains a list of items for a specific tracked shipment"@en ;
+   samm:characteristic :TrackedObject ;
+   samm:exampleValue "OBJECT".
+
+:Timestamp a samm:Characteristic ;
+   samm:preferredName "actual timestamp"@en ;
+   samm:description "timestamp of when exactly the the payload is executed by a business operation\n\nstring format for time (YYYY-MM-DDTHH:MM:SS)"@en ;
+   samm:dataType xsd:dateTime.
+
+:StatusUpdateReason a samm:Characteristic ;
+   samm:preferredName "status update reason"@en ;
+   samm:description "context for the message and reasoning for new shipment data"@en ;
+   samm:dataType :GeoCoordinates.
+
+:DepartureInfo a samm:Characteristic ;
+   samm:preferredName "daparture info"@en ;
+   samm:description "containing three separate attributes with data fields giving insight on the location of discharge of the shipment"@en ;
+   samm:dataType :DepartureAttributes.
+
+:RegistrationInfo a samm:Characteristic ;
+   samm:preferredName "registration info"@en ;
+   samm:description "Information to identify the Cargo Carrier or Vehicle for a shipment"@en ;
+   samm:dataType :VehicleRegistration.
+
+:ArrivalInfo a samm:Characteristic ;
+   samm:preferredName "arrival info"@en ;
+   samm:description "containing three separate attributes with data fields giving insight on the destination location of the shipment"@en ;
+   samm:dataType :ArrivalAttributes.
+
+:ShipmentNumber a samm:Characteristic ;
+   samm:preferredName "shipment number"@en ;
+   samm:description "Network internally unique ID code assigned to a shipment or parcel."@en ;
+   samm:dataType xsd:string.
+
+:ServiceAgentInfo a samm:Characteristic ;
+   samm:preferredName "service agent info"@en ;
+   samm:description "information on the hauler and forwarding agent of the shipment"@en ;
+   samm:dataType :ServiceAgentAttributes.
+
+:TransportInfo a samm:Characteristic ;
+   samm:preferredName "transport info"@en ;
+   samm:description "specifically includes the means of transport and flags like including dangerous goods/material"@en ;
+   samm:dataType :TransportAttributes.
+
+:EstimatedTimestamps a samm:Characteristic ;
+   samm:preferredName "estimated timestamps"@en ;
+   samm:description "includes all current time gated estimations regarding the foreseeable future of the shipment"@en ;
+   samm:dataType :EstimationAttributes.
+
+:TrackedObject a samm:Characteristic ;
+   samm:preferredName "tracked object"@en ;
+   samm:description "contains the actual individual items being tracked on the shipment"@en ;
+   samm:dataType xsd:string.
+
+:GeoCoordinates a samm:Entity ;
+   samm:preferredName "geo coordinates"@en ;
+   samm:description "give insight on the actual longitude/latitude position of the shipment"@en ;
+   samm:properties (:geoLongitude :geoLatitude).
+
+:DepartureAttributes a samm:Entity ;
+   samm:preferredName "departure location"@en ;
+   samm:description "contains the actual attributes for the departure location"@en ;
+   samm:properties (:locationName :locationId :locationType).
+
+:VehicleRegistration a samm:Entity ;
+   samm:preferredName "vehicle registration"@en ;
+   samm:description "Attributes to give insight on the cargo carrying Vehicle "@en ;
+   samm:properties (:registrationCountry :registrationNumber).
+
+:ArrivalAttributes a samm:Entity ;
+   samm:preferredName "arrival location"@en ;
+   samm:description "contains the actual attributes for the arrival location"@en ;
+   samm:properties (:locationName :locationId :locationType).
+
+:ServiceAgentAttributes a samm:Entity ;
+   samm:preferredName "service agent attributes"@en ;
+   samm:description "contains hauler ID and forwarding agent's ID for the shipment"@en ;
+   samm:properties (:haulerId :forwardingAgentId).
+
+:TransportAttributes a samm:Entity ;
+   samm:preferredName "transport attributes"@en ;
+   samm:description "attributes giving insight on transport parameters"@en ;
+   samm:properties (:meansOfTransport :dangerousGoods).
+
+:EstimationAttributes a samm:Entity ;
+   samm:preferredName "estimation attributes"@en ;
+   samm:description "different types of estimation timestamps"@en ;
+   samm:properties (:estimateArrival :estimateDispatch).
+
+:geoLongitude a samm:Property ;
+   samm:preferredName "geo longitude"@en ;
+   samm:description "longitude of the position of the shipment during the status update"@en ;
+   samm:characteristic :LongitudeCoordinate ;
+   samm:exampleValue "12.03"^^xsd:float.
+
+:geoLatitude a samm:Property ;
+   samm:preferredName "geo latitude"@en ;
+   samm:description "latitude of the position of the shipment during the status update"@en ;
+   samm:characteristic :LatitudeCoordinate ;
+   samm:exampleValue "56.34"^^xsd:float.
+
+:locationName a samm:Property ;
+   samm:preferredName "location name"@en ;
+   samm:description "name of the location variable set for arrival/departure"@en ;
+   samm:characteristic :LocationName ;
+   samm:exampleValue "Distribution Company Ltd.".
+
+:locationId a samm:Property ;
+   samm:preferredName "location id"@en ;
+   samm:description "location identification number for arrival/departure"@en ;
+   samm:characteristic :LocationID ;
+   samm:exampleValue "12345678"^^xsd:decimal.
+
+:locationType a samm:Property ;
+   samm:preferredName "location type"@en ;
+   samm:description "what sort of location is given for departure/arrival, could be a warehouse, a drop-off point, direct address etc."@en ;
+   samm:characteristic :LocationType ;
+   samm:exampleValue "Distribution Center".
+
+:registrationCountry a samm:Property ;
+   samm:preferredName "registration country"@en ;
+   samm:description "country code the license registration for the vehicle was issued"@en ;
+   samm:characteristic :RegistrationCountry ;
+   samm:exampleValue "DE".
+
+:registrationNumber a samm:Property ;
+   samm:preferredName "registration number"@en ;
+   samm:description "License plate number to identify the vehicle carrying the shipment"@en ;
+   samm:characteristic :RegistrationNumber ;
+   samm:exampleValue "D-RA-KL-8136".
+
+:haulerId a samm:Property ;
+   samm:preferredName "hauler id"@en ;
+   samm:description "identification of the dispatching company or individual responsible for hauling the items"@en ;
+   samm:characteristic :HaulerID ;
+   samm:exampleValue "HI-123456789".
+
+:forwardingAgentId a samm:Property ;
+   samm:preferredName "forwarding agent id"@en ;
+   samm:description "identification of the individual agent forwarding the freight onto other haulers or to the arrival location"@en ;
+   samm:characteristic :ForwardingAgentID ;
+   samm:exampleValue "FA-ID-987654321".
+
+:meansOfTransport a samm:Property ;
+   samm:preferredName "means of transport"@en ;
+   samm:description "the carrying vehicle or way of transportation for the specified shipment"@en ;
+   samm:characteristic :MeansOfTransport ;
+   samm:exampleValue "31"^^xsd:positiveInteger.
+
+:dangerousGoods a samm:Property ;
+   samm:preferredName "dangerous goods"@en ;
+   samm:description "shipment contains dangerous material or goods which requires special attention"@en ;
+   samm:characteristic :DangerousGoods ;
+   samm:exampleValue false.
+
+:estimateArrival a samm:Property ;
+   samm:preferredName "estimate arrival"@en ;
+   samm:description "current estimation for the arrival of the shipment"@en ;
+   samm:characteristic :Timestamp ;
+   samm:exampleValue "2024-07-01T16:55:00Z"^^xsd:dateTime.
+
+:estimateDispatch a samm:Property ;
+   samm:preferredName "estimate dispatch"@en ;
+   samm:description "current estimation for the dispatch of the shipment"@en ;
+   samm:characteristic :Timestamp ;
+   samm:exampleValue "2024-06-28T16:55:00Z"^^xsd:dateTime.
+
+:LongitudeCoordinate a samm:Characteristic ;
+   samm:dataType xsd:float.
+
+:LatitudeCoordinate a samm:Characteristic ;
+   samm:dataType xsd:float.
+
+:LocationName a samm:Characteristic ;
+   samm:dataType xsd:string.
+
+:LocationID a samm:Characteristic ;
+   samm:dataType xsd:decimal.
+
+:LocationType a samm:Characteristic ;
+   samm:dataType xsd:string.
+
+:RegistrationCountry a samm:Characteristic ;
+   samm:preferredName "registration country"@en ;
+   samm:description "country code for the registration license of the transporting vehicle"@en ;
+   samm:dataType xsd:string.
+
+:RegistrationNumber a samm:Characteristic ;
+   samm:preferredName "registration number"@en ;
+   samm:description "string containing the registration number for the registered vehicle"@en ;
+   samm:dataType xsd:string.
+
+:HaulerID a samm:Characteristic ;
+   samm:preferredName "hauler id"@en ;
+   samm:description "string containing hauler identification"@en ;
+   samm:dataType xsd:string.
+
+:ForwardingAgentID a samm:Characteristic ;
+   samm:preferredName "forwarding agent id"@en ;
+   samm:description "string containing agent's identification"@en ;
+   samm:dataType xsd:string.
+
+:MeansOfTransport a samm:Characteristic ;
+   samm:preferredName "means of transport"@en ;
+   samm:description "code referencing a transportation method for the specific shipment"@en ;
+   samm:dataType xsd:positiveInteger.
+
+:DangerousGoods a samm:Characteristic ;
+   samm:preferredName "dangerous goods"@en ;
+   samm:description "boolean value indication the inclusion of dangerous goods on the shipment or not"@en ;
+   samm:dataType xsd:boolean.
