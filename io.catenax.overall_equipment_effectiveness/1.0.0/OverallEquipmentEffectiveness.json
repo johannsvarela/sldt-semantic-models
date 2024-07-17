@@ -1,0 +1,30 @@
+{
+  "effectivenessCalculationList" : [ {
+    "customerInformation" : {
+      "project" : "G70",
+      "productionPhase" : "Batch/Stresstest/OtD"
+    },
+    "productInformation" : {
+      "productLine" : "N75 Pack",
+      "processStep" : "M20"
+    },
+    "forecast" : [ {
+      "value" : "70",
+      "period" : "P0Y0M5DT0H0M0S",
+      "startTime" : "2024-02-06T00:00:00+01:00"
+    } ],
+    "actualCalculation" : {
+      "startTime" : "2024-02-06T00:00:00+01:00",
+      "period" : "P0Y0M5DT0H0M0S",
+      "unit" : "%",
+      "value" : "70",
+      "target" : "65"
+    }
+  } ],
+  "supplierInformation" : {
+    "manufacturerBpnl" : "BPNL1234567890LE",
+    "manufacturerPlantBpns" : "BPNS0987654321SI",
+    "supplierId" : 123456,
+    "locationId" : 654321
+  }
+}
