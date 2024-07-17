@@ -1,0 +1,198 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema",
+  "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#OverallEquipmentEffectiveness",
+  "type" : "object",
+  "components" : {
+    "schemas" : {
+      "PeriodTrait" : {
+        "type" : "string",
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#PeriodTrait",
+        "pattern" : "^P(?:[0-9]{1,2}Y)?(?:[0-9]{1,2}M)?(?:[0-9]{1,2}W)?(?:[0-9]{1,2}D)?(?:T(?:[0-9]{1,2}H)?(?:[0-9]{1,2}M)?(?:[0-9]{1,2}S)?)?$"
+      },
+      "EfficiencyCalculationBaseStringCharacteristic" : {
+        "type" : "string",
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#EfficiencyCalculationBaseStringCharacteristic"
+      },
+      "StartTimeCharacteristic" : {
+        "type" : "string",
+        "pattern" : "-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?|(24:00:00(\\.0+)?))(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?",
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#StartTimeCharacteristic"
+      },
+      "ForecastSetEntity" : {
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#ForecastSetEntity",
+        "type" : "object",
+        "properties" : {
+          "period" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#period",
+            "$ref" : "#/components/schemas/PeriodTrait"
+          },
+          "value" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#value",
+            "$ref" : "#/components/schemas/EfficiencyCalculationBaseStringCharacteristic"
+          },
+          "startTime" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#startTime",
+            "$ref" : "#/components/schemas/StartTimeCharacteristic"
+          }
+        },
+        "required" : [ "period", "value", "startTime" ]
+      },
+      "ForecastSet" : {
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#ForecastSet",
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/ForecastSetEntity"
+        },
+        "uniqueItems" : true
+      },
+      "ScheduledTargetCharacteristic" : {
+        "type" : "string",
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#ScheduledTargetCharacteristic"
+      },
+      "ActualCalculationCharacteristic" : {
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#ActualCalculationCharacteristic",
+        "type" : "object",
+        "properties" : {
+          "startTime" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#startTime",
+            "$ref" : "#/components/schemas/StartTimeCharacteristic"
+          },
+          "period" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#period",
+            "$ref" : "#/components/schemas/PeriodTrait"
+          },
+          "value" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#value",
+            "$ref" : "#/components/schemas/EfficiencyCalculationBaseStringCharacteristic"
+          },
+          "target" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#target",
+            "$ref" : "#/components/schemas/ScheduledTargetCharacteristic"
+          },
+          "unit" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#unit",
+            "$ref" : "#/components/schemas/EfficiencyCalculationBaseStringCharacteristic"
+          }
+        },
+        "required" : [ "startTime", "period", "value", "target", "unit" ]
+      },
+      "CustomerInformationStringCharacteristic" : {
+        "type" : "string",
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#CustomerInformationStringCharacteristic"
+      },
+      "CustomerInformationCharacteristic" : {
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#CustomerInformationCharacteristic",
+        "type" : "object",
+        "properties" : {
+          "productionPhase" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#productionPhase",
+            "$ref" : "#/components/schemas/CustomerInformationStringCharacteristic"
+          },
+          "project" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#project",
+            "$ref" : "#/components/schemas/CustomerInformationStringCharacteristic"
+          }
+        },
+        "required" : [ "productionPhase", "project" ]
+      },
+      "ProductInformationStringCharacteristic" : {
+        "type" : "string",
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#ProductInformationStringCharacteristic"
+      },
+      "ProductInformationCharacteristic" : {
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#ProductInformationCharacteristic",
+        "type" : "object",
+        "properties" : {
+          "productLine" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#productLine",
+            "$ref" : "#/components/schemas/ProductInformationStringCharacteristic"
+          },
+          "processStep" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#processStep",
+            "$ref" : "#/components/schemas/ProductInformationStringCharacteristic"
+          }
+        },
+        "required" : [ "productLine" ]
+      },
+      "EffectivenessCalculationListEntity" : {
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#EffectivenessCalculationListEntity",
+        "type" : "object",
+        "properties" : {
+          "forecast" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#forecast",
+            "$ref" : "#/components/schemas/ForecastSet"
+          },
+          "actualCalculation" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#actualCalculation",
+            "$ref" : "#/components/schemas/ActualCalculationCharacteristic"
+          },
+          "customerInformation" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#customerInformation",
+            "$ref" : "#/components/schemas/CustomerInformationCharacteristic"
+          },
+          "productInformation" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#productInformation",
+            "$ref" : "#/components/schemas/ProductInformationCharacteristic"
+          }
+        },
+        "required" : [ "actualCalculation", "customerInformation", "productInformation" ]
+      },
+      "EffectivenessCalculationBaseList" : {
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#EffectivenessCalculationBaseList",
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/EffectivenessCalculationListEntity"
+        }
+      },
+      "BpnsCharacteristic" : {
+        "type" : "string",
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.shared.business_partner_number:2.0.0#BpnsCharacteristic",
+        "description" : "BPNS (Business Partner Number Site) represents a site which can be a production plant. A site can also be e.g. an office or a warehouse. An information related to a site is e.g. needed for reporting issues (How many sites does e.g. Beispiel AG have?), status of operation (out of operations due to environmental disaster), for certificates on site level (e.g. environment certificates) or for internal regulations on site level, (e.g. security topics, Corona rules,...). Several addresses (= BPNA with different streets and different gates) can belong to one site. A BPNS should be always linked to one BPNL via relationship 'belongs to legal entity'."
+      },
+      "IdCharacteristic" : {
+        "type" : "number",
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#IdCharacteristic",
+        "description" : "Characteristic to give information on the ID of the supplier."
+      },
+      "BpnlCharacteristic" : {
+        "type" : "string",
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.shared.business_partner_number:2.0.0#BpnlCharacteristic",
+        "description" : "BPNL (Business Partner Number Legal Entity) represents the legal entity of an organization (e.g. enterprise, university, association, …) and contains its legal name (incl. legal form, if registered), registered address and tax number. The registered address is the official, legal correspondence address which has to be supplied to governmental and tax authorities and is the address which is used in any legal or court documents. BPNL is on corporate level and is unique for this legal entity."
+      },
+      "SupplierInformationCharacteristic" : {
+        "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#SupplierInformationCharacteristic",
+        "type" : "object",
+        "properties" : {
+          "manufacturerPlantBpns" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#manufacturerPlantBpns",
+            "$ref" : "#/components/schemas/BpnsCharacteristic"
+          },
+          "locationId" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#locationId",
+            "$ref" : "#/components/schemas/IdCharacteristic"
+          },
+          "supplierId" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#supplierId",
+            "$ref" : "#/components/schemas/IdCharacteristic"
+          },
+          "manufacturerBpnl" : {
+            "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#manufacturerBpnl",
+            "$ref" : "#/components/schemas/BpnlCharacteristic"
+          }
+        },
+        "required" : [ "manufacturerPlantBpns", "locationId", "supplierId", "manufacturerBpnl" ]
+      }
+    }
+  },
+  "properties" : {
+    "effectivenessCalculationList" : {
+      "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#effectivenessCalculationList",
+      "$ref" : "#/components/schemas/EffectivenessCalculationBaseList"
+    },
+    "supplierInformation" : {
+      "x-samm-aspect-model-urn" : "urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#supplierInformation",
+      "$ref" : "#/components/schemas/SupplierInformationCharacteristic"
+    }
+  },
+  "required" : [ "effectivenessCalculationList", "supplierInformation" ]
+}
