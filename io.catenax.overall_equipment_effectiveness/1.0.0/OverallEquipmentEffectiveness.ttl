@@ -1,0 +1,189 @@
+@prefix samm: <urn:samm:org.eclipse.esmf.samm:meta-model:2.1.0#>.
+@prefix samm-c: <urn:samm:org.eclipse.esmf.samm:characteristic:2.1.0#>.
+@prefix samm-e: <urn:samm:org.eclipse.esmf.samm:entity:2.1.0#>.
+@prefix unit: <urn:samm:org.eclipse.esmf.samm:unit:2.1.0#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix : <urn:samm:io.catenax.overall_equipment_effectiveness:1.0.0#>.
+@prefix ext-number: <urn:samm:io.catenax.shared.business_partner_number:2.0.0#>.
+
+:OverallEquipmentEffectiveness a samm:Aspect;
+   samm:preferredName "Overall Equipment Effectiveness"@en;
+   samm:properties (:effectivenessCalculationBase :supplierInformation :customerInformation [ samm:property :productInformation; samm:optional true ]);
+   samm:operations ();
+   samm:events ().
+
+:effectivenessCalculationBase a samm:Property;
+   samm:preferredName "Effectiveness Calculation Base"@en;
+   samm:characteristic :EffectivenessCalculationBaseCharacteristic.
+
+:supplierInformation a samm:Property;
+   samm:preferredName "Supplier Information"@en;
+   samm:characteristic :SupplierInformationCharacteristic.
+
+:customerInformation a samm:Property;
+   samm:preferredName "Customer Information"@en;
+   samm:characteristic :CustomerInformationCharacteristic.
+
+:productInformation a samm:Property;
+   samm:preferredName "Product Information"@en;
+   samm:characteristic :ProductInformationCharacteristic.
+
+:EffectivenessCalculationBaseCharacteristic a samm:Characteristic;
+   samm:preferredName "Effectiveness Calculation Base Characteristic"@en;
+   samm:dataType :EffectivenessCalculationBaseEntity.
+
+:SupplierInformationCharacteristic a samm:Characteristic;
+   samm:preferredName "Supplier Information Characteristic"@en;
+   samm:dataType :SupplierInformationEntity.
+
+:CustomerInformationCharacteristic a samm:Characteristic;
+   samm:preferredName "Customer Information Characteristic"@en;
+   samm:dataType :CustomerInformationEntity.
+
+:ProductInformationCharacteristic a samm:Characteristic;
+   samm:preferredName "Product Information Characteristic"@en;
+   samm:dataType :ProductInformationEntity.
+
+:EffectivenessCalculationBaseEntity a samm:Entity;
+   samm:preferredName "Effectiveness Calculation Base Entity"@en;
+   samm:properties ([ samm:property :forecast; samm:optional true ] :actualCalculation).
+
+:SupplierInformationEntity a samm:Entity;
+   samm:preferredName "Supplier Information Entity"@en;
+   samm:properties (:manufacturerPlantBpns :locationId :supplierId :manufacturerBpnl).
+
+:CustomerInformationEntity a samm:Entity;
+   samm:preferredName "Customer Information Entity"@en;
+   samm:properties (:productionPhase :project).
+
+:ProductInformationEntity a samm:Entity;
+   samm:preferredName "Product Information Entity"@en;
+   samm:properties (:productLine :processStep).
+
+:forecast a samm:Property;
+   samm:preferredName "Forecast"@en;
+   samm:characteristic :ForecastSet.
+
+:actualCalculation a samm:Property;
+   samm:preferredName "Actual Calculation"@en;
+   samm:characteristic :ActualCalculationCharacteristic.
+
+:manufacturerPlantBpns a samm:Property;
+   samm:preferredName "Manufacturer Plant BPN-S"@en;
+   samm:characteristic ext-number:BpnsCharacteristic;
+   samm:exampleValue "BPNS0987654321SI".
+
+:locationId a samm:Property;
+   samm:preferredName "Location ID"@en;
+   samm:characteristic :IdCharacteristic;
+   samm:exampleValue 654321.
+
+:supplierId a samm:Property;
+   samm:preferredName "Supplier ID"@en;
+   samm:characteristic :IdCharacteristic;
+   samm:exampleValue 123456.
+
+:manufacturerBpnl a samm:Property;
+   samm:preferredName "Manufacturer BPN-L"@en;
+   samm:characteristic ext-number:BpnlCharacteristic;
+   samm:exampleValue "BPNL1234567890LE".
+
+:productionPhase a samm:Property;
+   samm:preferredName "Production Phase"@en;
+   samm:characteristic :CustomerInformationStringCharacteristic;
+   samm:exampleValue "Batch/Stresstest/OtD".
+
+:project a samm:Property;
+   samm:preferredName " Project"@en;
+   samm:characteristic :CustomerInformationStringCharacteristic;
+   samm:exampleValue "G70".
+
+:productLine a samm:Property;
+   samm:preferredName "Product Line"@en;
+   samm:characteristic :ProductInformationStringCharacteristic;
+   samm:exampleValue "N75 Pack".
+
+:processStep a samm:Property;
+   samm:preferredName "Process Step"@en;
+   samm:characteristic :ProductInformationStringCharacteristic;
+   samm:exampleValue "M20".
+
+:ForecastSet a samm-c:Set;
+   samm:preferredName "Forecast Set"@en;
+   samm:dataType :ForecastSetEntity.
+
+:ActualCalculationCharacteristic a samm:Characteristic;
+   samm:preferredName "Actual Calculation Characteristic"@en;
+   samm:dataType :ActualCalculationEntity.
+
+:IdCharacteristic a samm:Characteristic;
+   samm:preferredName "ID Characteristic"@en;
+   samm:description "Characteristic to give information on the ID of the supplier."@en;
+   samm:dataType xsd:integer.
+
+:CustomerInformationStringCharacteristic a samm:Characteristic;
+   samm:preferredName "Customer Information String Characteristic"@en;
+   samm:dataType xsd:string.
+
+:ProductInformationStringCharacteristic a samm:Characteristic;
+   samm:preferredName "Product Information String Characteristic"@en;
+   samm:dataType xsd:string.
+
+:ForecastSetEntity a samm:Entity;
+   samm:preferredName "Forecast Set Entity"@en;
+   samm:properties (:period :value :startTime).
+
+:ActualCalculationEntity a samm:Entity;
+   samm:preferredName "Actual Calculation Entity"@en;
+   samm:properties (:startTime :period :value :target :unit).
+
+:period a samm:Property;
+   samm:preferredName "Period"@en;
+   samm:characteristic :PeriodTrait;
+   samm:exampleValue "P0Y0M5DT0H0M0S".
+
+:value a samm:Property;
+   samm:preferredName "Value"@en;
+   samm:characteristic :EfficiencyCalculationBaseStringCharacteristic;
+   samm:exampleValue "70".
+
+:startTime a samm:Property;
+   samm:preferredName "Start Time"@en;
+   samm:characteristic :StartTimeCharacteristic;
+   samm:exampleValue "2024-02-06T00:00:00+01:00"^^xsd:dateTime.
+
+:target a samm:Property;
+   samm:preferredName "Target"@en;
+   samm:characteristic :ScheduledTargetCharacteristic;
+   samm:exampleValue "65".
+
+:unit a samm:Property;
+   samm:preferredName "Unit"@en;
+   samm:characteristic :EfficiencyCalculationBaseStringCharacteristic;
+   samm:exampleValue "%".
+
+:PeriodTrait a samm-c:Trait;
+   samm-c:baseCharacteristic :PeriodCharacteristic;
+   samm-c:constraint :PeriodRegularExpression.
+
+:EfficiencyCalculationBaseStringCharacteristic a samm:Characteristic;
+   samm:preferredName "Efficiency Calculation Base String Characteristic"@en;
+   samm:dataType xsd:string.
+
+:StartTimeCharacteristic a samm:Characteristic;
+   samm:preferredName "Start Time Characteristic"@en;
+   samm:dataType xsd:dateTime.
+
+:ScheduledTargetCharacteristic a samm:Characteristic;
+   samm:preferredName "Scheduled Target Characteristic"@en;
+   samm:dataType xsd:string.
+
+:PeriodCharacteristic a samm:Characteristic;
+   samm:preferredName "Period Characteristic"@en;
+   samm:see <https://www.iso.org/iso-8601-date-and-time-format.html>;
+   samm:dataType xsd:string.
+
+:PeriodRegularExpression a samm-c:RegularExpressionConstraint;
+   samm:value "^P(?:(\\d+)Y)?(?:(\\d+)M)?(?:(\\d+)W)?(?:(\\d+)D)?(?:T(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+(?:\\.\\d+)?)S)?)?$".
